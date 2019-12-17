@@ -6,7 +6,6 @@ on:
   push:
   schedule:
     - cron: "0 10 * * *"    # 每天早上4点执行
-    - cron: "0 23 * * *"    # 每天早上7点再次执行(预防出错)
 
 jobs:
   build:
