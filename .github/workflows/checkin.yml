@@ -5,7 +5,7 @@ on:
   issue_comment:
   push:
   schedule:
-    - cron: "0 10 * * *"    # 每天早上4点执行
+    - cron: "0 10 * * *"    # 每天早上6点执行
 
 jobs:
   build:
@@ -18,9 +18,9 @@ jobs:
         run: |
           cat /etc/issue
           sudo lsb_release -a
-      - name: Install Google Chrome
+      - name: Install Google Chrome (sudo wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb)
         run: |
-          sudo wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+          sudo apt-get install -y libgbm1
           sudo dpkg -i google-chrome-stable_current_amd64.deb
       - name: Install selenium
         run: |
