@@ -5,11 +5,19 @@ on:
   issue_comment:
   push:
   schedule:
-    - cron: "0 10 * * *"    # 每天早上10点执行
+    - cron: "0 10 * * *"    # 每天早上4点执行
 
 jobs:
   build:
     runs-on: ubuntu-18.04
+
+    services:
+      selenium:
+        image: selenium/standalone-chrome:3.141.59
+        ports:
+          - 4444:4444
+        volumes:
+          - /dev/shm:/dev/shm
 
     steps:
       - uses: actions/checkout@v1
@@ -18,13 +26,6 @@ jobs:
         run: |
           cat /etc/issue
           sudo lsb_release -a
-      - name: Install Google Chrome (sudo wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb)
-        run: |
-          sudo apt-get install -y libgbm1
-          sudo dpkg -i google-chrome-stable_current_amd64.deb
-      - name: Install selenium
-        run: |
-          sudo wget -q -O /usr/bin/selenium.jar https://selenium-release.storage.googleapis.com/3.141/selenium-server-standalone-3.141.59.jar
       - name: Install php dependencies
         run: |
           composer install --prefer-dist --no-progress --no-suggest
